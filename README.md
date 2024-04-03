@@ -1,14 +1,17 @@
-Sport Application 
+# TopSport Application 
+## Description
 
-Team Name :
+An TOPSPORT is application that helps you to know the best scorers for various sports, including football, basketball, cricket, and tennis, and also to know the special leagues in your country or any other country.
 
-CodeCommandos - 👩🏻‍💻⚡️
+### Team Name :
 
-Name Students:
+##### CodeCommandos - 👩🏻‍💻⚡️
 
-Shahad Kamli
-Ghazl Jayyar
-Arwa Alzahrani
+### Name Students:
 
-Team leader:
-Arwa Alzahrani
+##### Shahad Kamli
+##### Ghazl Jayyar
+##### Arwa Alzahrani
+
+### Team leader:
+##### Arwa Alzahrani
