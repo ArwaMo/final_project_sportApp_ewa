@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "3052507089",
+    "project_id": "sportappewa",
+    "storage_bucket": "sportappewa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3052507089:android:92460efc64af2bc28adaf0",
+        "android_client_info": {
+          "package_name": "com.example.sport_app_ewa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3052507089-bdm5i2bn9nom5ao0lgu7m1iuk0qtg8sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoLJ4-E-HFnpS9xQjbTMgOPxQt-Kv8u_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3052507089-bdm5i2bn9nom5ao0lgu7m1iuk0qtg8sk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
