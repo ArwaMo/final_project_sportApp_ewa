@@ -132,8 +132,7 @@ class LoginScreen extends StatelessWidget {
                                 context
                                     .read<UpdateBoolValueCubit>()
                                     .updateValue(isLoginOTP);
-                                // isLoginOTP = true;
-                                // setState(() {});
+                             
                                 Future.delayed(Duration(seconds: 2), () {
                                   Navigator.pushAndRemoveUntil(
                                       context,
