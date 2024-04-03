@@ -47,7 +47,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
       drawer: const DrawerWidget(),
       body: BlocBuilder<GetInfoCubit, GetInfoState>(
         builder: (context, state) {
-          
           if (state is GetInfoCountryLoading) {
             return Center(
               child: CircularProgressIndicator(),
