@@ -1,14 +1,14 @@
-#Sport Application 
+Sport Application 
 
-###Team Name :
+Team Name :
 
-####CodeCommandos - 👩🏻‍💻⚡️
+CodeCommandos - 👩🏻‍💻⚡️
 
-###Name Students:
+Name Students:
 
-####Shahad Kamli
-####Ghazl Jayyar
-####Arwa Alzahrani
+Shahad Kamli
+Ghazl Jayyar
+Arwa Alzahrani
 
-###Team leader:
-####Arwa Alzahrani
+Team leader:
+Arwa Alzahrani
