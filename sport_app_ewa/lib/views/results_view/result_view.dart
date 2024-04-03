@@ -8,7 +8,7 @@ class ResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 87, 85, 189),
+      backgroundColor: Color.fromARGB(255, 118, 118, 202),
       body: ResultViewBody(),
     );
   }

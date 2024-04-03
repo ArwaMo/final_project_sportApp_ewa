@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class CustomMatchResulty extends StatelessWidget {
-  const CustomMatchResulty(
+class CustomMatchResultyy extends StatelessWidget {
+  const CustomMatchResultyy(
       {super.key,
-      required this.firstTeamLogo,
+      // required this.firstTeamLogo,
       required this.firstTeamName,
       required this.result,
-      required this.secondTeamLogo,
+      // required this.secondTeamLogo,
       required this.secondTeamName});
 
-  final String firstTeamLogo;
+  // final String firstTeamLogo;
   final String firstTeamName;
   final String result;
-  final String secondTeamLogo;
+  // final String secondTeamLogo;
   final String secondTeamName;
 
   @override
@@ -22,10 +22,10 @@ class CustomMatchResulty extends StatelessWidget {
       children: [
         Row(
           children: [
-            Image.asset(
-              firstTeamLogo,
-              width: 45,
-            ),
+            // Image.asset(
+            //   // firstTeamLogo,
+            //   width: 45,
+            // ),
             const SizedBox(
               width: 5,
             ),
@@ -61,10 +61,10 @@ class CustomMatchResulty extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            Image.asset(
-              secondTeamLogo,
-              width: 40,
-            ),
+            // Image.asset(
+            //   secondTeamLogo,
+            //   width: 40,
+            // ),
           ],
         ),
       ],

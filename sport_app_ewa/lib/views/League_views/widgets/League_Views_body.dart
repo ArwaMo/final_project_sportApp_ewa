@@ -3,6 +3,7 @@ import 'package:sport_app/views/home_view/home_view.dart';
 import 'package:sport_app/views/home_view/widgets/competition_card.dart';
 import 'package:sport_app/views/League_views/League_views.dart';
 import 'package:sport_app/views/results_view/result_view.dart';
+import 'package:sport_app/views/resulty_view/resulty_view.dart';
 
 class LeagueViewsody extends StatelessWidget {
   const LeagueViewsody({super.key});
@@ -70,7 +71,7 @@ class LeagueViewsody extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 18),
                   child: Text(
-                    'Top scorers',
+                    'Top Scorers',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 24,
@@ -98,7 +99,7 @@ class LeagueViewsody extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return const ResultView();
+                              return const ResultyyView();
                             }));
                           },
                           leagueLogo: 'assets/images/criss.png',
@@ -125,7 +126,7 @@ class LeagueViewsody extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomCompetitionCard(
-                          leagueLogo: 'assets/images/bundes_liga.png',
+                          leagueLogo: 'assets/images/ali.png',
                           leagueName: 'Alexander\n Mitrovic',
                           leagueNation: 'Striker',
                         ),
@@ -135,7 +136,7 @@ class LeagueViewsody extends StatelessWidget {
                       ),
                       Expanded(
                         child: CustomCompetitionCard(
-                          leagueLogo: 'assets/images/kilan.jpg',
+                          leagueLogo: 'assets/images/kilans.jpg',
                           leagueName: 'kilan\nmbape',
                           leagueNation: 'Striker',
                         ),
@@ -157,7 +158,8 @@ class LeagueViewsody extends StatelessWidget {
                         Row(
                           children: [
                             CircleAvatar(
-                              backgroundColor: Color.fromARGB(255, 252, 8, 8),
+                              backgroundColor:
+                                  Color.fromARGB(255, 255, 255, 255),
                               radius: 35,
                               child: Image.asset(
                                 'assets/images/ty.png',

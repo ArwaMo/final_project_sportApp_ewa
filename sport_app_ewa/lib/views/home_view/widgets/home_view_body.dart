@@ -179,7 +179,7 @@ class HomeViewBody extends StatelessWidget {
                                 // ResultView
                               },
                               child: const Text(
-                                'See all\n eligible teamss',
+                                'The best scorers\n in this league',
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
