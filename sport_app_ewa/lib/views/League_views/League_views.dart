@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 
-=======
 import 'package:sport_app/views/home_view/home_view.dart';
->>>>>>> 4e06da94d858eb7c464bb67c4aaa08be565adbea
 
 import 'widgets/League_Views_body.dart';
 

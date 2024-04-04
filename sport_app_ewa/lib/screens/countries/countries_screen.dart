@@ -78,8 +78,8 @@ class _CountriesScreenState extends State<CountriesScreen> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
                               const Color.fromARGB(255, 110, 190, 255))),
-                      onPressed: () async {
-                        await context
+                      onPressed: () {
+                        context
                             .read<GetCurrentCountryCubit>()
                             .getCurrentCountry(currentCountry);
 

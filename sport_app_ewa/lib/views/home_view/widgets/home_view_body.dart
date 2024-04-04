@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 
-import 'package:sport_app_ewa/views/League_views/League_views.dart';
-import 'package:sport_app_ewa/views/home_view/widgets/competition_card.dart';
-import 'package:sport_app_ewa/views/results_view/result_view.dart';
-=======
+
 import 'package:sport_app/views/home_view/home_view.dart';
 import 'package:sport_app/views/home_view/widgets/competition_card.dart';
 import 'package:sport_app/views/League_views/League_views.dart';
 import 'package:sport_app/views/results_view/result_view.dart';
->>>>>>> 4e06da94d858eb7c464bb67c4aaa08be565adbea
+
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
