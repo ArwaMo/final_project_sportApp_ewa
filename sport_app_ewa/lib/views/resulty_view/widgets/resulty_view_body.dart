@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:sport_app_ewa/views/resulty_view/widgets/custom_match_resulty.dart';
 import 'package:sport_app_ewa/views/resulty_view/widgets/share.dart';
+=======
+import 'package:sport_app/views/results_view/widgets/custom_match_result.dart';
+import 'package:sport_app/views/resulty_view/widgets/custom_match_resulty.dart';
+import 'package:sport_app/views/resulty_view/widgets/share.dart';
+>>>>>>> 4e06da94d858eb7c464bb67c4aaa08be565adbea
 
 class ResultyViewBody extends StatelessWidget {
   const ResultyViewBody({super.key});

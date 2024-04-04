@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:sport_app_ewa/views/results_view/widgets/custom_match_result.dart';
+=======
+import 'package:sport_app/views/results_view/widgets/custom_match_result.dart';
+>>>>>>> 4e06da94d858eb7c464bb67c4aaa08be565adbea
 
 class ResultViewBody extends StatelessWidget {
   const ResultViewBody({super.key});
