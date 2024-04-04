@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sport_app_ewa/views/results_view/widgets/custom_match_result.dart';
+
+
+import 'package:sport_app/views/results_view/widgets/custom_match_result.dart';
 
 
 class ResultViewBody extends StatelessWidget {
