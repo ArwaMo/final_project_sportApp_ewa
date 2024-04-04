@@ -19,14 +19,14 @@ class PlayerData {
 }
 
 class TopscorersModel {
-  final String playerPlace;
+  final int playerPlace;
   final String playerName;
   final int playerKey;
   final String teamName;
-  final String teamKey;
-  final String goals;
-  final String? assists;
-  final String penaltyGoals;
+  final int teamKey;
+  final int goals;
+  final int? assists;
+  final int penaltyGoals;
 
   TopscorersModel({
     required this.playerPlace,
