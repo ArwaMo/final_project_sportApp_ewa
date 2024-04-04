@@ -17,24 +17,39 @@ class CountriesScreen extends StatefulWidget {
 class _CountriesScreenState extends State<CountriesScreen> {
   CountriesList? countriesList;
   ScrollController controller = ScrollController();
-  double itemHeight = 150.0;
-
-  // void scrollToCountry(String country) {
-  //   int index = result!.countries.indexOf(country);
-  //   if (index != -1) {
-  //     controller.animateTo(
-  //       index * itemHeight,
-  //       duration: Duration(milliseconds: 500),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-  // }
+  double itemHeight = 92.0;
+  String? currentCountry;
 
   @override
   void initState() {
     context.read<GetInfoCubit>().getInfoCountry();
 
     super.initState();
+  }
+
+  List<String> allCountry = [];
+
+  scrollCountry(String currentCountry) {
+    int? scrollToIndex;
+    for (int i = 0; i < allCountry.length; i++) {
+      if (currentCountry == 'United States') {
+        int index = allCountry.indexOf('USA');
+
+        scrollToIndex = index;
+      }
+
+      if (currentCountry == allCountry[i]) {
+        scrollToIndex = i;
+        break;
+      }
+    }
+    if (scrollToIndex! != 0) {
+      controller.animateTo(
+        scrollToIndex * itemHeight,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -63,10 +78,12 @@ class _CountriesScreenState extends State<CountriesScreen> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
                               const Color.fromARGB(255, 110, 190, 255))),
-                      onPressed: () {
-                        context
+                      onPressed: () async {
+                        await context
                             .read<GetCurrentCountryCubit>()
-                            .getCurrentCountry();
+                            .getCurrentCountry(currentCountry);
+
+                        scrollCountry('United States');
                       },
                       icon: Icon(
                         Icons.location_on,
@@ -118,45 +135,83 @@ class _CountriesScreenState extends State<CountriesScreen> {
                       height: 10,
                     ),
                     GridView.builder(
+                      controller: controller,
                       physics: ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: state.countriesList.countries.length,
                       itemBuilder: (context, index) {
                         final country = state.countriesList.countries[index];
+                        allCountry.add(country.countryName!);
 
+                        // scrollCountry(country.countryName!);
                         return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LeaguesScreen(
-                                        countryKey: country.countryKey,
-                                      )),
-                            );
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Image.network(
-                                    country.countryLogo ?? '',
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            Icon(Icons.error),
-                                  ),
-                                ),
-                                Text(
-                                  country.countryName ?? 'Unknown',
-                                  style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LeaguesScreen(
+                                          countryKey: country.countryKey,
+                                        )),
+                              );
+                            },
+                            child: (state.countriesList.countries[index]
+                                        .countryName ==
+                                    'USA')
+                                ? ClipRRect(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.symmetric(
+                                              vertical: BorderSide(
+                                                  width: 7,
+                                                  color: Color.fromARGB(
+                                                      255, 45, 13, 159)),
+                                              horizontal: BorderSide(
+                                                  width: 7,
+                                                  color: Color.fromARGB(
+                                                      255, 45, 13, 159)))),
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: Image.network(
+                                              country.countryLogo ?? '',
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  Icon(Icons.error),
+                                            ),
+                                          ),
+                                          Text(
+                                            country.countryName ?? 'Unknown',
+                                            style: const TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    decoration: const BoxDecoration(),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: Image.network(
+                                            country.countryLogo ?? '',
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Icon(Icons.error),
+                                          ),
+                                        ),
+                                        Text(
+                                          country.countryName ?? 'Unknown',
+                                          style: const TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
                       },
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
