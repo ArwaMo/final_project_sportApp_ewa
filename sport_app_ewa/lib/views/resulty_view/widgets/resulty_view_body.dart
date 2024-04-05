@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-
-=======
 import 'package:sport_app/views/results_view/widgets/custom_match_result.dart';
 import 'package:sport_app/views/resulty_view/widgets/custom_match_resulty.dart';
 import 'package:sport_app/views/resulty_view/widgets/share.dart';
 
-class ResultyViewBody extends StatelessWidget {
-  const ResultyViewBody({super.key});
+class ResultyyViewBody extends StatelessWidget {
+  final scorersModel player;
+
+  const ResultyyViewBody({Key? key, required this.player}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 30),
       child: Column(
         children: [
+          CustomMatchResultyy(
+            firstTeamName: 'Player country',
+            result: player.teamName,
+            secondTeamName: '',
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -69,15 +74,15 @@ class ResultyViewBody extends StatelessWidget {
             padding: const EdgeInsets.only(top: 30, bottom: 70),
             child: Column(
               children: [
-                Image.asset(
+                Image.network(
                   'assets/images/criss.png',
                   width: 55,
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                const Text(
-                  'cristiano ronaldo',
+                Text(
+                  player.playerName,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -86,8 +91,8 @@ class ResultyViewBody extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  'Player number:7',
+                Text(
+                  'Player number: ${player.playerKey}',
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
@@ -165,61 +170,7 @@ class ResultyViewBody extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.only(top: 30),
                           child: Column(
-                            children: [
-                              CustomMatchResultyy(
-                                firstTeamName: 'Player country',
-                                result: 'Portugal',
-                                secondTeamName: '',
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              CustomMatchResultyy(
-                                firstTeamName: 'Player position',
-                                result: 'Forward',
-                                secondTeamName: '.',
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              CustomMatchResultyy(
-                                firstTeamName: 'Player age ',
-                                result: '  age 39',
-                                secondTeamName: '',
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              CustomMatchResultyy(
-                                firstTeamName: 'yellow cards',
-                                result: '120',
-                                secondTeamName: '',
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              CustomMatchResultyy(
-                                firstTeamName: 'red cards',
-                                result: '    3',
-                                secondTeamName: '',
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              CustomMatchResultyy(
-                                firstTeamName: 'Player goals',
-                                result: '885',
-                                secondTeamName: '',
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              CustomMatchResultyy(
-                                firstTeamName: 'Player assists',
-                                result: '268',
-                                secondTeamName: '',
-                              ),
-                            ],
+                            children: [],
                           ),
                         ),
                       ]))))
