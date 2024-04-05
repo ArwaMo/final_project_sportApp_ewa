@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
+
 import 'package:sport_app/views/home_view/home_view.dart';
 import 'package:sport_app/views/home_view/widgets/competition_card.dart';
 import 'package:sport_app/views/League_views/League_views.dart';
 import 'package:sport_app/views/results_view/result_view.dart';
+
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -55,6 +57,7 @@ class Services {
     }
   }
 
+// here
   Future<List<TeamModel>?> getTeamsAPI(int leagueId, String? teamName) async {
     try {
       final response = await dio.post(
@@ -83,41 +86,44 @@ class Services {
     }
   }
 
-  Future<List<TopscorersModel>?> getTopscorersAPI(int leagueId) async {
+  Future<List<TopscorersModel>?> getTopscorersAPI(dynamic leagueId) async {
     try {
       final response = await dio.get(
         'https://apiv2.allsportsapi.com/football/?&met=Topscorers&leagueId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
       );
-      // print(leagueId);
+
       if (response.statusCode == 200) {
         final data = response.data;
-        // print(data);
-        if (data != null && data['success'] == 1 && data['result'] != null) {
-          //  print('object');
-          final List<dynamic> results = data['result'];
-          //  print(results);
 
-          List<TopscorersModel> topScorer =
-              results.map((item) => TopscorersModel.fromJson(item)).toList();
-          // final List<TopscorersModel> topScorer = results
-          //     .map<TopscorersModel>(
-          //         (dynamic item) => TopscorersModel.fromJson(item))
-          //     .toList();
-          print('=================');
-          print(topScorer);
-          return topScorer;
+        if (data != null && data['success'] == 1) {
+          if (data['result'] != null) {
+            List<dynamic> result;
+            if (data['result'] is String) {
+              result = jsonDecode(data['result']);
+            } else if (data['result'] is List) {
+              result = data['result'];
+            } else {
+              // print('Error: Unexpected data structure for result');
+              return null;
+            }
+
+            final List<TopscorersModel> results =
+                result.map((json) => TopscorersModel.fromJson(json)).toList();
+            return results;
+          } else {
+            //   print('Data not available');
+            return null;
+          }
         } else {
-          print('Error: Invalid API response');
-
-          //hanling this is not found
+          // print('Error: Invalid API response');
           return null;
         }
       } else {
-        //   print('HTTP Error: ${response.statusCode}');
+        //   print('Error: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      //  print('Error fetching teams: $e');
+      //  print('Error: $e');
       return null;
     }
   }

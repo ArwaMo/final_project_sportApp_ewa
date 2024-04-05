@@ -7,9 +7,9 @@ part 'get_current_country_state.dart';
 class GetCurrentCountryCubit extends Cubit<GetCurrentCountryState> {
   GetCurrentCountryCubit() : super(GetCurrentCountryInitial());
 
-  getCurrentCountry() async {
+  getCurrentCountry( String? currentCountry) async {
+
     emit(GetCurrentCountryLoading());
-    String? currentCountry;
     String? country = await Services().getCurrentCountry();
     if (country != null) {
       currentCountry = country;

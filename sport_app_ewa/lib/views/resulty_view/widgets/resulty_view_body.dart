@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sport_app/data/models/socor_model.dart';
 import 'package:sport_app/views/results_view/widgets/custom_match_result.dart';
 import 'package:sport_app/views/resulty_view/widgets/custom_match_resulty.dart';
 import 'package:sport_app/views/resulty_view/widgets/share.dart';

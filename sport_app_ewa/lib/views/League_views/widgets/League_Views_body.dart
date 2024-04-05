@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sport_app/views/home_view/home_view.dart';
-import 'package:sport_app/views/home_view/widgets/competition_card.dart';
+import 'package:sport_app_ewa/views/home_view/home_view.dart';
+import 'package:sport_app_ewa/views/home_view/widgets/competition_card.dart';
+import 'package:sport_app_ewa/views/resulty_view/resulty_view.dart';
 import 'package:sport_app/views/League_views/League_views.dart';
 import 'package:sport_app/views/results_view/result_view.dart';
-import 'package:sport_app/views/resulty_view/resulty_view.dart';
+
 
 class LeagueViewsody extends StatelessWidget {
   const LeagueViewsody({super.key});

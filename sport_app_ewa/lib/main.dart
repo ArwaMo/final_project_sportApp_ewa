@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
         ),
       ],
       child: const MaterialApp(
-          debugShowCheckedModeBanner: false, home: HomeScreen()),
+          debugShowCheckedModeBanner: false, home: SplashScreen()),
     );
   }
 }
