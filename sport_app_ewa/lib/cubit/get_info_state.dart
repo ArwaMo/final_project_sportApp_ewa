@@ -26,7 +26,7 @@ final class GetInfoLeagueError extends GetInfoState {}
 final class GetInfoTeamLoading extends GetInfoState {}
 
 final class GetInfoTeamSuccess extends GetInfoState {
-  final List<TeamModel>? teamList;
+  final List<TeamTopscorersModel>? teamList;
   GetInfoTeamSuccess(this.teamList);
 }
 
@@ -39,3 +39,13 @@ final class GetInfoTopscorersSuccess extends GetInfoState {
 }
 
 final class GetInfoTopscorersError extends GetInfoState {}
+
+
+final class GetInfoPlayersLoading extends GetInfoState {}
+
+final class GetInfoPlayersSuccess extends GetInfoState {
+  final List<PlayersModel>? playerList;
+  GetInfoPlayersSuccess(this.playerList);
+}
+
+final class GetInfoPlayersError extends GetInfoState {}

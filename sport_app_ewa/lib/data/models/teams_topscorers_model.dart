@@ -1,34 +1,37 @@
+import 'package:sport_app_ewa/data/models/players_model.dart';
+
 class ApiResponse {
   final int success;
-  final List<TeamModel> result;
+  final List<TeamTopscorersModel> result;
 
   ApiResponse({required this.success, required this.result});
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     var list = json['result'] as List;
-    List<TeamModel> resultList =
-        list.map((i) => TeamModel.fromJson(i)).toList();
+    List<TeamTopscorersModel> resultList =
+        list.map((i) => TeamTopscorersModel.fromJson(i)).toList();
     return ApiResponse(success: json['success'], result: resultList);
   }
 }
 
-class TeamModel {
+class TeamTopscorersModel {
   final int teamKey;
   final String teamName;
   final String? teamLogo;
-  final List<Player> players;
+  final List<PlayersModel> players;
 
-  TeamModel({
+  TeamTopscorersModel({
     required this.teamKey,
     required this.teamName,
     required this.teamLogo,
     required this.players,
   });
 
-  factory TeamModel.fromJson(Map<String, dynamic> json) {
+  factory TeamTopscorersModel.fromJson(Map<String, dynamic> json) {
     var list = json['players'] as List;
-    List<Player> playersList = list.map((i) => Player.fromJson(i)).toList();
-    return TeamModel(
+    List<PlayersModel> playersList =
+        list.map((i) => PlayersModel.fromJson(i)).toList();
+    return TeamTopscorersModel(
       teamKey: json['team_key'],
       teamName: json['team_name'],
       teamLogo: json['team_logo'],
@@ -38,10 +41,10 @@ class TeamModel {
 }
 
 class Player {
-  final int playerKey;
+  final int? playerKey;
   final String? playerName;
   final String? playerNumber;
-  final String? playerCountry;
+  final dynamic playerCountry;
   final String? playerType;
   final String? playerAge;
   final String? playerMatchPlayed;

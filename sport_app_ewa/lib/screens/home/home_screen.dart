@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sport_app_ewa/data/models/countries_model.dart';
 import 'package:sport_app_ewa/screens/countries/countries_screen.dart';
-import 'package:sport_app_ewa/screens/home/components/dialog_category.dart';
+import 'package:sport_app_ewa/screens/widgets/dialog_text_otp.dart';
 import 'package:sport_app_ewa/screens/home/components/sport_category.dart';
 import 'package:sport_app_ewa/screens/widgets/drawer_widget.dart';
 import 'package:sport_app_ewa/services/services.dart';

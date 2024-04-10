@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sport_app_ewa/cubit/update_bool_value_cubit.dart';
 import 'package:sport_app_ewa/data/global_data/global_data.dart';
-import 'package:sport_app_ewa/screens/home/components/dialog_category.dart';
+import 'package:sport_app_ewa/screens/widgets/dialog_text_otp.dart';
 import 'package:sport_app_ewa/screens/home/home_screen.dart';
 import 'package:sport_app_ewa/screens/login/components/text_field_widget.dart';
 import 'package:sport_app_ewa/screens/widgets/dialog_loading.dart';

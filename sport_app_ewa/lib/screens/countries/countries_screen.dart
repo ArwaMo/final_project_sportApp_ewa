@@ -200,7 +200,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                             fit: BoxFit.cover,
                                             errorBuilder:
                                                 (context, error, stackTrace) =>
-                                                    Icon(Icons.error),
+                                                    const Icon(Icons.image),
                                           ),
                                         ),
                                         Text(

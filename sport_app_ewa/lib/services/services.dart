@@ -1,12 +1,11 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sport_app_ewa/data/models/countries_model.dart';
 import 'package:sport_app_ewa/data/models/leagues_model.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:sport_app_ewa/data/models/teams_model.dart';
+import 'package:sport_app_ewa/data/models/players_model.dart';
+import 'package:sport_app_ewa/data/models/teams_topscorers_model.dart';
 import 'package:sport_app_ewa/data/models/topscorers_model.dart';
 
 class Services {
@@ -58,12 +57,14 @@ class Services {
   }
 
 // here
-  Future<List<TeamModel>?> getTeamsAPI(int leagueId, String? teamName) async {
+  Future<List<TeamTopscorersModel>?> getTeamsAPI(
+      int leagueId, String? teamName) async {
     try {
       final response = await dio.post(
         'https://apiv2.allsportsapi.com/football/?&met=Teams&teamId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
       );
 
+      print('team id $leagueId');
       if (response.statusCode == 200) {
         final getData = response.data;
 
@@ -71,8 +72,9 @@ class Services {
             getData['success'] == 1 &&
             getData['result'] != null) {
           List<dynamic> resultsData = getData['result'];
-          List<TeamModel> results =
-              resultsData.map((item) => TeamModel.fromJson(item)).toList();
+          List<TeamTopscorersModel> results = resultsData
+              .map((item) => TeamTopscorersModel.fromJson(item))
+              .toList();
 
           return results;
         } else {
@@ -124,6 +126,54 @@ class Services {
       }
     } catch (e) {
       //  print('Error: $e');
+      return null;
+    }
+  }
+
+  Future<List<PlayersModel>?> getPlayersAPI(dynamic teamKey) async {
+    try {
+      final response = await dio.get(
+        'https://apiv2.allsportsapi.com/football/?&met=Players&teamId=$teamKey&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+
+        if (data != null && data['success'] == 1) {
+          if (data['result'] != null) {
+            List<dynamic> result;
+            //  print('pppp'); //done
+            if (data['result'] is String) {
+              result = jsonDecode(data['result']);
+              //print('String');
+            } else if (data['result'] is List) {
+              result = data['result'];
+              // print('List');
+              // print('list data[' 'result' ']$result');
+            } else {
+              // print('Error: Unexpected data structure for result');
+              return null;
+            }
+
+            final List<PlayersModel> results =
+                result.map((json) => PlayersModel.fromJson(json)).toList();
+           // print('after json');
+            //  print(results[0].teamName);
+            return results;
+          } else {
+          //  print('Data not available');
+            return null;
+          }
+        } else {
+        //  print('Error: Invalid API response');
+          return null;
+        }
+      } else {
+       // print('Error: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+    //  print('Error: $e');
       return null;
     }
   }
