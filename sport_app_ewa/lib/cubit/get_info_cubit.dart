@@ -2,7 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sport_app_ewa/data/models/countries_model.dart';
 import 'package:sport_app_ewa/data/models/leagues_model.dart';
-import 'package:sport_app_ewa/data/models/teams_model.dart';
+import 'package:sport_app_ewa/data/models/players_model.dart';
+import 'package:sport_app_ewa/data/models/teams_topscorers_model.dart';
 import 'package:sport_app_ewa/data/models/topscorers_model.dart';
 import 'package:sport_app_ewa/services/services.dart';
 
@@ -41,12 +42,12 @@ class GetInfoCubit extends Cubit<GetInfoState> {
     try {
       emit(GetInfoTeamLoading());
 
-      List<TeamModel>? result =
+      List<TeamTopscorersModel>? result =
           await Services().getTeamsAPI(leagueId, searchController);
       // print('here fun getData');
       // print(leagueId);
 
-      List<TeamModel>? teamsResult;
+      List<TeamTopscorersModel>? teamsResult;
       if (result != null) {
         //  print('here fun getData');
         // print(result);
@@ -67,11 +68,33 @@ class GetInfoCubit extends Cubit<GetInfoState> {
       emit(GetInfoTopscorersLoading());
       List<TopscorersModel>? topScorer =
           await Services().getTopscorersAPI(leagueId);
-     // print(topScorer);
+      print(topScorer);
+      print('-------------');
       if (topScorer != null) {
+        print(topScorer);
         emit(GetInfoTopscorersSuccess(topScorer));
       } else {
+        print('here errror');
         emit(GetInfoTopscorersError());
+      }
+    } catch (er) {
+      print('this catch $er');
+    }
+    return null;
+  }
+
+  Future<List<PlayersModel>?> getInfoPlayers(dynamic teamKey) async {
+    try {
+      emit(GetInfoPlayersLoading());
+      List<PlayersModel>? players = await Services().getPlayersAPI(teamKey);
+      print('team');
+      print('-------------');
+      if (players != null) {
+        print(players);
+        emit(GetInfoPlayersSuccess(players));
+      } else {
+        print('here errror');
+        emit(GetInfoPlayersError());
       }
     } catch (er) {
       print('this catch $er');

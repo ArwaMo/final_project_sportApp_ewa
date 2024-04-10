@@ -3,6 +3,7 @@ import 'package:sport_app/views/results_view/widgets/custom_match_result.dart';
 import 'package:sport_app/views/resulty_view/widgets/custom_match_resulty.dart';
 import 'package:sport_app/views/resulty_view/widgets/share.dart';
 
+
 class ResultyyViewBody extends StatelessWidget {
   final scorersModel player;
 
