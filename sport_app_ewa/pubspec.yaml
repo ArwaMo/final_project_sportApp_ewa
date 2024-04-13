@@ -12,13 +12,13 @@ dependencies:
   firebase_core: ^2.27.2
   flutter:
     sdk: flutter
-  share: ^2.0.4  
   flutter_bloc: ^8.1.5
   geocoding: ^3.0.0
   geolocator: ^11.0.0
   google_sign_in: ^6.2.1
   permission_handler: ^11.3.1
   shared_preferences: ^2.2.2
+  share_plus: ^8.0.3
 
 dev_dependencies:
   flutter_test:

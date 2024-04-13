@@ -13,6 +13,8 @@ class GetInfoCubit extends Cubit<GetInfoState> {
   GetInfoCubit() : super(GetInfoInitial());
 
   getInfoCountry() async {
+    List<CountryModel> country=[];
+
     emit(GetInfoCountryLoading());
 
     CountriesList? countriesList = await Services().getCountryAPI();
@@ -44,14 +46,9 @@ class GetInfoCubit extends Cubit<GetInfoState> {
 
       List<TeamTopscorersModel>? result =
           await Services().getTeamsAPI(leagueId, searchController);
-      // print('here fun getData');
-      // print(leagueId);
 
       List<TeamTopscorersModel>? teamsResult;
       if (result != null) {
-        //  print('here fun getData');
-        // print(result);
-
         teamsResult = result;
 
         emit(GetInfoTeamSuccess(teamsResult));

@@ -132,7 +132,7 @@ class LoginScreen extends StatelessWidget {
                                 context
                                     .read<UpdateBoolValueCubit>()
                                     .updateValue(isLoginOTP);
-                             
+
                                 Future.delayed(Duration(seconds: 2), () {
                                   Navigator.pushAndRemoveUntil(
                                       context,
@@ -208,15 +208,18 @@ class LoginScreen extends StatelessWidget {
                             final user = await LoginServices.loginWithGoogle();
 
                             if (user != null) {
+                              showLoading(context);
                               context
                                   .read<UpdateBoolValueCubit>()
                                   .updateValue(!isLoginOTP);
 
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const HomeScreen()),
-                                  (Route route) => false);
+                              Future.delayed(Duration(seconds: 2), () {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const HomeScreen()),
+                                    (Route route) => false);
+                              });
                             }
                           } on FirebaseAuthException catch (er) {
                             print(er.message);
