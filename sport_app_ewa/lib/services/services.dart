@@ -46,6 +46,7 @@ class Services {
           final List<LeagueModel> leagues = results
               .map((dynamic item) => LeagueModel.fromJson(item))
               .toList();
+          print('this api country$countryId');
           return LeaguesList(leagues: leagues);
         }
       }
@@ -60,11 +61,11 @@ class Services {
   Future<List<TeamTopscorersModel>?> getTeamsAPI(
       int leagueId, String? teamName) async {
     try {
-      final response = await dio.post(
+      final response = await dio.get(
         'https://apiv2.allsportsapi.com/football/?&met=Teams&teamId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
       );
 
-      print('team id $leagueId');
+      // print('this res $response');
       if (response.statusCode == 200) {
         final getData = response.data;
 
@@ -72,9 +73,11 @@ class Services {
             getData['success'] == 1 &&
             getData['result'] != null) {
           List<dynamic> resultsData = getData['result'];
+          // print(resultsData);
           List<TeamTopscorersModel> results = resultsData
               .map((item) => TeamTopscorersModel.fromJson(item))
               .toList();
+          print('this api leagueId$leagueId');
 
           return results;
         } else {
@@ -157,23 +160,23 @@ class Services {
 
             final List<PlayersModel> results =
                 result.map((json) => PlayersModel.fromJson(json)).toList();
-           // print('after json');
+            // print('after json');
             //  print(results[0].teamName);
             return results;
           } else {
-          //  print('Data not available');
+            //  print('Data not available');
             return null;
           }
         } else {
-        //  print('Error: Invalid API response');
+          //  print('Error: Invalid API response');
           return null;
         }
       } else {
-       // print('Error: ${response.statusCode}');
+        // print('Error: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-    //  print('Error: $e');
+      //  print('Error: $e');
       return null;
     }
   }

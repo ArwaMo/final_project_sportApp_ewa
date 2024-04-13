@@ -5,7 +5,6 @@ import 'package:sport_app_ewa/cubit/get_current_country_cubit.dart';
 import 'package:sport_app_ewa/cubit/get_info_cubit.dart';
 import 'package:sport_app_ewa/cubit/update_bool_value_cubit.dart';
 import 'package:sport_app_ewa/firebase_options.dart';
-import 'package:sport_app_ewa/screens/home/home_screen.dart';
 import 'package:sport_app_ewa/screens/splash/splash_screen.dart';
 
 void main() async {
@@ -25,7 +24,7 @@ class MainApp extends StatelessWidget {
           create: (BuildContext context) => UpdateBoolValueCubit(),
         ),
         BlocProvider<GetInfoCubit>(
-          create: (BuildContext context) => GetInfoCubit(),
+          create: (BuildContext context) => GetInfoCubit().getInfoCountry(),
         ),
         BlocProvider<GetCurrentCountryCubit>(
           create: (BuildContext context) => GetCurrentCountryCubit(),
