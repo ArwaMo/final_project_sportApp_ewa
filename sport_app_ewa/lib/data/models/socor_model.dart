@@ -1,5 +1,3 @@
-import 'package:sport_app/views/resulty_view/widgets/resulty_view_body.dart';
-
 class ResultyViewBody {
   final int success;
   final List<scorersModel> result;
