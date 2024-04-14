@@ -89,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
-                    color: Color(0xff2ba1e3)),
+                    color: Color.fromARGB(255, 138, 116, 88)),
               )),
         )
       ],

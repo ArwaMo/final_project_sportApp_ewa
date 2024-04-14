@@ -24,6 +24,7 @@ class IntroAppInfoWidget extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
+              color: Color(0xff171c38),
               fontSize: 28.0,
               fontWeight: FontWeight.bold,
             ),
@@ -38,6 +39,7 @@ class IntroAppInfoWidget extends StatelessWidget {
           Text(
             content,
             style: TextStyle(
+              color: Color(0xff171c38),
               fontSize: 18.0,
             ),
             textAlign: TextAlign.center,

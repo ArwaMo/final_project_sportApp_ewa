@@ -28,12 +28,23 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 33, 39, 74),
       appBar: AppBar(
-        title: const Text('Leagues'),
+        title: const Text(
+          'Leagues',
+          style: TextStyle(
+            color: Color(0xffeefdfe),
+          ),
+        ),
         centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 33, 39, 74),
+        iconTheme: IconThemeData(
+          color: Color(0xffeefdfe),
+        ),
       ),
       drawer: DrawerWidget(),
       body: BlocBuilder<GetInfoCubit, GetInfoState>(
+        buildWhen: (previous, current) => current is GetInfoLeagueSuccess,
         builder: (context, state) {
           if (state is GetInfoLeagueLoading) {
             return Center(
@@ -49,7 +60,10 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                       alignment: AlignmentDirectional.topStart,
                       child: Text(
                         'Leagues of ${state.leaguesList.leagues[0].countryName}',
-                        style: TextStyle(fontSize: 25),
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Color(0xffeefdfe),
+                        ),
                       ),
                     ),
                   ),
@@ -72,22 +86,33 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                             );
                           },
                           child: Card(
+                            color: Color(0xffc8ac89),
                             child: ListTile(
-                              trailing: Image.network(
-                                league.countryLogo ?? '',
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Icon(Icons.error),
-                                scale: 4,
-                                fit: BoxFit.cover,
+                              contentPadding: EdgeInsets.all(10),
+                              trailing: ClipRRect(
+                                borderRadius: BorderRadius.circular(3),
+                                child: Image.network(
+                                  league.countryLogo ?? '',
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Icon(Icons.error),
+                                  scale: 4,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              leading: Image.network(
-                                league.leagueLogo ?? '',
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Icon(Icons.error),
-                                fit: BoxFit.cover,
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  league.leagueLogo ?? '',
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Icon(Icons.image),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              title: Text(league.leagueName ?? ''),
-                              subtitle: Text(league.countryName ?? ''),
+                              title: Text(
+                                league.leagueName ?? '',
+                                style: TextStyle(
+                                    color: Color(0xff171c38), fontSize: 17),
+                              ),
                             ),
                           ),
                         ),

@@ -24,25 +24,19 @@ class _PlayersScreenState extends State<PlayersScreen> {
   @override
   void initState() {
     super.initState();
-    //print('player key::${widget.players[0].teamName}');
     context.read<GetInfoCubit>().getInfoPlayers(widget.player);
   }
-
-  // Future<void> getPlayerKey() async {
-  //   var fetchedPlayers = await Services().getPlayersAPI(widget.player);
-
-  //   if (fetchedPlayers != null) {
-  //     setState(() {
-  //       res = fetchedPlayers;
-  //     });
-  //   }
-  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: const DrawerWidget(),
         appBar: AppBar(
-          title: const Text('Players'),
+          title: const Text(
+            'Players',
+            style: TextStyle(
+              color: Color((0xff171c38)),
+            ),
+          ),
           centerTitle: true,
         ),
         body: BlocBuilder<GetInfoCubit, GetInfoState>(
@@ -71,35 +65,47 @@ class _PlayersScreenState extends State<PlayersScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return InkWell(
-                              onTap: () {
-                                dialog(
-                                  context,
-                                  state.playerList![index].playerName,
-                                  state.playerList![index].playerNumber,
-                                  state.playerList![index].playerCountry,
-                                  state.playerList![index].playerImage,
-                                  state.playerList![index].playerType,
-                                  state.playerList![index].playerAge,
-                                  state.playerList![index].playerYellowCards,
-                                  state.playerList![index].playerRedCards,
-                                  state.playerList![index].playerGoals,
-                                  state.playerList![index].playerAssists,
-                                );
-                              },
-                              child: Card(
-                                child: ListTile(
-                                  leading: Image.network(
-                                      '${state.playerList![index].playerImage}',
-                                      errorBuilder:
-                                          (context, error, stackTrace) =>
-                                              const Icon(Icons.image)),
-                                  title: Text(
-                                      '${state.playerList![index].playerName ?? ''}'),
-                                  subtitle: Text(
-                                      'Player Number: ${state.playerList![index].playerType ?? ''}'),
-                                ),
-                              ),
-                            );
+                                onTap: () {
+                                  dialog(
+                                    context,
+                                    state.playerList![index].playerName,
+                                    state.playerList![index].playerNumber,
+                                    state.playerList![index].playerCountry,
+                                    state.playerList![index].playerImage,
+                                    state.playerList![index].playerType,
+                                    state.playerList![index].playerAge,
+                                    state.playerList![index].playerYellowCards,
+                                    state.playerList![index].playerRedCards,
+                                    state.playerList![index].playerGoals,
+                                    state.playerList![index].playerAssists,
+                                  );
+                                },
+                                child: Card(
+                                  color: const Color(0xff1b223f),
+                                  child: ListTile(
+                                    leading: ClipOval(
+                                      child: Image.network(
+                                          '${state.playerList![index].playerImage ?? ''}',
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  const Icon(
+                                                    Icons.image,
+                                                    color: Color(0xffeefdfe),
+                                                  )),
+                                    ),
+                                    title: Text(
+                                      '${state.playerList![index].playerName ?? ''}',
+                                      style: const TextStyle(
+                                          color: Color(0xffeefdfe),
+                                          fontSize: 17),
+                                    ),
+                                    subtitle: Text(
+                                      '${state.playerList![index].playerType ?? ''}',
+                                      style: const TextStyle(
+                                          color: Color(0xffa1a0b7)),
+                                    ),
+                                  ),
+                                ));
                           },
                           separatorBuilder: (context, index) {
                             return const Divider();

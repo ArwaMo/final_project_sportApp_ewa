@@ -16,7 +16,10 @@ dialog(
           children: [
             Text(
               text,
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+              style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff171c38)),
             ),
             const SizedBox(height: 10),
             TextButton(
@@ -25,7 +28,7 @@ dialog(
               },
               child: const Text(
                 'Close',
-                style: TextStyle(color: Color(0xff2ba1e3)),
+                style: TextStyle(color: Color.fromARGB(255, 138, 116, 88)),
               ),
             ),
           ],

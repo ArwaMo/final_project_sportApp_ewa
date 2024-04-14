@@ -30,10 +30,10 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Stack(children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 140),
+                    padding: const EdgeInsets.only(top: 170, left: 50),
                     child: Image.asset(
                       'assets/images/logo_player.png',
-                      opacity: const AlwaysStoppedAnimation(.4),
+                      opacity: const AlwaysStoppedAnimation(.2),
                     ),
                   ),
                   Positioned(
@@ -50,16 +50,17 @@ class LoginScreen extends StatelessWidget {
                           Text(
                             'Login',
                             style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff2a3c4e)),
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff171c38),
+                            ),
                           ),
                           Text(
                             'Login to your account',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff2a3c4e)),
+                                color: Color(0xff171c38)),
                           ),
                         ],
                       ),
@@ -94,9 +95,8 @@ class LoginScreen extends StatelessWidget {
                         ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStatePropertyAll(
-                                    Color(0xffe2cf19))),
+                                    Color(0xffc8ac89))),
                             onPressed: () {
-                              //verify all text field is not empty + verify random number is same, then push home with data number
                               if (phoneNum.text.isEmpty || otp.text.isEmpty) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
@@ -108,7 +108,6 @@ class LoginScreen extends StatelessWidget {
                                 ));
                               } else if (phoneNum.text.length >= 11 ||
                                   phoneNum.text.length < 10) {
-                                print(phoneNum.text.length);
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(SnackBar(
                                   backgroundColor: Colors.red,
@@ -143,21 +142,21 @@ class LoginScreen extends StatelessWidget {
                               }
                             },
                             child: const Text('Verify',
-                                style: TextStyle(color: Color(0xff2a3c4e)))),
+                                style: TextStyle(color: Color(0xff171c38)))),
                         SizedBox(
                           width: 9,
                         ),
                         ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStatePropertyAll(
-                                    Color(0xffe2cf19))),
+                                    Color(0xffc8ac89))),
                             onPressed: () {
                               number = generateOTP();
                               dialog(context, number);
                             },
                             child: const Text(
                               'Generate OTP',
-                              style: TextStyle(color: Color(0xff2a3c4e)),
+                              style: TextStyle(color: Color(0xff171c38)),
                             )),
                       ],
                     ),
@@ -171,7 +170,7 @@ class LoginScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width / 2.4,
                           height: 1,
                           decoration: BoxDecoration(
-                            color: Color(0xff2a3c4e),
+                            color: Color(0xff171c38),
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                           ),
                         ),
@@ -186,7 +185,7 @@ class LoginScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width / 2.4,
                           height: 1,
                           decoration: BoxDecoration(
-                            color: Color(0xff2a3c4e),
+                            color: Color(0xff171c38),
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                           ),
                         ),
@@ -200,7 +199,7 @@ class LoginScreen extends StatelessWidget {
                     child: ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Color(0xffe2cf19))),
+                                MaterialStatePropertyAll(Color(0xffc8ac89))),
                         onPressed: () async {
                           //login with google
 
@@ -243,7 +242,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             Text(
                               'Login with Google',
-                              style: TextStyle(color: Color(0xff2a3c4e)),
+                              style: TextStyle(color: Color(0xff171c38)),
                             ),
                           ],
                         )),

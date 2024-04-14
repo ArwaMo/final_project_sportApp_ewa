@@ -1,5 +1,3 @@
-
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:sport_app_ewa/data/models/countries_model.dart';
@@ -15,8 +13,6 @@ class GetInfoCubit extends Cubit<GetInfoState> {
   GetInfoCubit() : super(GetInfoInitial());
 
   getInfoCountry() async {
-    List<CountryModel> country=[];
-
     emit(GetInfoCountryLoading());
 
     CountriesList? countriesList = await Services().getCountryAPI();
