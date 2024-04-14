@@ -13,26 +13,32 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 33, 39, 74),
       appBar: AppBar(
         actions: [
           Image.asset('assets/images/logo_player.png'),
         ],
+        backgroundColor: Color.fromARGB(255, 33, 39, 74),
+        iconTheme: IconThemeData(
+          color: Color(0xffeefdfe),
+        ),
       ),
       drawer: const DrawerWidget(),
       body: Column(
         children: [
           SizedBox(
-            height: 15,
+            height: 80,
           ),
           const Text(
             'SPORTS CATEGORIES',
             style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff2a3c4e)),
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Color(0xffeefdfe),
+            ),
           ),
           const SizedBox(
-            height: 90,
+            height: 60,
           ),
           GridView(
             shrinkWrap: true,

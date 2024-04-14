@@ -13,7 +13,6 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //bloc
     return Drawer(
       child: BlocBuilder<UpdateBoolValueCubit, UpdateBoolValueState>(
         builder: (context, state) {
@@ -22,13 +21,13 @@ class DrawerWidget extends StatelessWidget {
             children: [
               DrawerHeader(
                 decoration: const BoxDecoration(
-                  color: Color(0xff2a3c4e),
+                  color: Color(0xffd5d2e1),
                 ),
                 child: Center(
                   child: Text(
                     '${state is UpdateBoolValueSuccess ? state.value ? phoneNum.text : LoginServices.user!.displayName : ''}',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xff171c38),
                       fontSize: 24,
                     ),
                   ),

@@ -43,12 +43,15 @@ class _CountriesScreenState extends State<CountriesScreen> {
         break;
       }
     }
+
     if (scrollToIndex! != 0) {
-      controller.animateTo(
-        scrollToIndex * itemHeight,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
+      Future.delayed(Duration(seconds: 6), () {
+        controller.animateTo(
+          scrollToIndex! * itemHeight,
+          duration: Duration(milliseconds: 1000),
+          curve: Curves.easeInOut,
+        );
+      });
     }
   }
 
@@ -56,19 +59,21 @@ class _CountriesScreenState extends State<CountriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Countries'),
+        title: const Text('Countries',
+            style: TextStyle(
+              color: Color((0xff171c38)),
+            )),
         centerTitle: true,
       ),
       drawer: const DrawerWidget(),
       body: BlocBuilder<GetInfoCubit, GetInfoState>(
+        buildWhen: (previous, current) => current is GetInfoCountrySuccess,
         builder: (context, state) {
           if (state is GetInfoCountryLoading) {
-            print('GetInfoCountryLoading: $state');
             return Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is GetInfoCountrySuccess) {
-            print('GetInfoCountrySuccess: $state');
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
@@ -79,7 +84,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     ElevatedButton.icon(
                       style: ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
-                              const Color.fromARGB(255, 110, 190, 255))),
+                              const Color(0xffc8ac89))),
                       onPressed: () {
                         context
                             .read<GetCurrentCountryCubit>()
@@ -89,11 +94,13 @@ class _CountriesScreenState extends State<CountriesScreen> {
                       },
                       icon: Icon(
                         Icons.location_on,
-                        color: const Color.fromARGB(255, 105, 105, 105),
+                        color: Color(0xff171c38),
                       ),
                       label: Text(
                         'Get Current Location',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 29, 34, 64),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -102,7 +109,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     BlocBuilder<GetCurrentCountryCubit, GetCurrentCountryState>(
                       builder: (context, state) {
                         if (state is GetCurrentCountryLoading) {
-                          print('GetCurrentCountryLoading: $state');
                           return Center(
                             child: LinearProgressIndicator(
                               borderRadius:
@@ -110,11 +116,10 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             ),
                           );
                         } else if (state is GetCurrentCountrySuccess) {
-                          print('GetCurrentCountrySuccess: $state');
                           return RichText(
                             text: TextSpan(
                               text: 'Current Country: ',
-                              style: TextStyle(color: Colors.black87),
+                              style: TextStyle(color: Color(0xff171c38)),
                               children: <TextSpan>[
                                 TextSpan(
                                     text: '${state.currentCountry}',
@@ -125,7 +130,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             ),
                           );
                         } else if (state is GetCurrentCountryError) {
-                          print('GetCurrentCountryErro: $state');
                           return Center(
                             child: Text(
                                 'There is an error, your current location cannot be retrieved'),
@@ -194,6 +198,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                       Text(
                                         country.countryName ?? 'Unknown',
                                         style: const TextStyle(
+                                            color: Color(0xff171c38),
                                             fontSize: 17,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -219,6 +224,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                         Text(
                                           country.countryName ?? 'Unknown',
                                           style: const TextStyle(
+                                              color: Color(0xff171c38),
                                               fontSize: 17,
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -238,10 +244,9 @@ class _CountriesScreenState extends State<CountriesScreen> {
               ),
             );
           } else if (state is GetInfoCountryError) {
-            print('GetInfoCountryError: $state');
             return Center(child: Text('Something went wrong'));
           }
-          print('Unhandled State: $state');
+
           return Center(child: Text('Initial State'));
         },
       ),

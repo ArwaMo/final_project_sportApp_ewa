@@ -28,7 +28,11 @@ class SportCategory extends StatelessWidget {
             ),
             Text(
               text,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 17,
+                color: Color(0xffeefdfe),
+              ),
             ),
           ],
         ),
