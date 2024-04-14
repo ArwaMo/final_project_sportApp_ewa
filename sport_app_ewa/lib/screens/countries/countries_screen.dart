@@ -63,12 +63,12 @@ class _CountriesScreenState extends State<CountriesScreen> {
       body: BlocBuilder<GetInfoCubit, GetInfoState>(
         builder: (context, state) {
           if (state is GetInfoCountryLoading) {
-            print('GetInfoCountryLoading');
+            print('GetInfoCountryLoading: $state');
             return Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is GetInfoCountrySuccess) {
-            print('GetInfoCountrySuccess');
+            print('GetInfoCountrySuccess: $state');
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
@@ -102,7 +102,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     BlocBuilder<GetCurrentCountryCubit, GetCurrentCountryState>(
                       builder: (context, state) {
                         if (state is GetCurrentCountryLoading) {
-                          print('GetCurrentCountryLoading');
+                          print('GetCurrentCountryLoading: $state');
                           return Center(
                             child: LinearProgressIndicator(
                               borderRadius:
@@ -110,7 +110,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             ),
                           );
                         } else if (state is GetCurrentCountrySuccess) {
-                          print('GetCurrentCountrySuccess');
+                          print('GetCurrentCountrySuccess: $state');
                           return RichText(
                             text: TextSpan(
                               text: 'Current Country: ',
@@ -125,7 +125,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             ),
                           );
                         } else if (state is GetCurrentCountryError) {
-                          print('GetCurrentCountryError');
+                          print('GetCurrentCountryErro: $state');
                           return Center(
                             child: Text(
                                 'There is an error, your current location cannot be retrieved'),
@@ -162,21 +162,25 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             child: (state.countriesList.countries[index]
                                         .countryName ==
                                     'USA')
-                                ? ClipRRect(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.symmetric(
-                                              vertical: BorderSide(
-                                                  width: 7,
-                                                  color: Color.fromARGB(
-                                                      255, 45, 13, 159)),
-                                              horizontal: BorderSide(
-                                                  width: 7,
-                                                  color: Color.fromARGB(
-                                                      255, 45, 13, 159)))),
-                                      child: Column(
-                                        children: [
-                                          Expanded(
+                                ? Column(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              border: Border.symmetric(
+                                                  vertical: BorderSide(
+                                                      width: 10,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 0, 0)),
+                                                  horizontal: BorderSide(
+                                                      width: 10,
+                                                      color: Color.fromARGB(
+                                                          255, 0, 0, 0)))),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                             child: Image.network(
                                               country.countryLogo ?? '',
                                               fit: BoxFit.cover,
@@ -185,27 +189,31 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                                   Icon(Icons.error),
                                             ),
                                           ),
-                                          Text(
-                                            country.countryName ?? 'Unknown',
-                                            style: const TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                      Text(
+                                        country.countryName ?? 'Unknown',
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   )
                                 : Container(
                                     decoration: const BoxDecoration(),
                                     child: Column(
                                       children: [
                                         Expanded(
-                                          child: Image.network(
-                                            country.countryLogo ?? '',
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) =>
-                                                    const Icon(Icons.image),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            child: Image.network(
+                                              country.countryLogo ?? '',
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  const Icon(Icons.image),
+                                            ),
                                           ),
                                         ),
                                         Text(
@@ -230,9 +238,10 @@ class _CountriesScreenState extends State<CountriesScreen> {
               ),
             );
           } else if (state is GetInfoCountryError) {
-            print('GetInfoCountryError');
+            print('GetInfoCountryError: $state');
             return Center(child: Text('Something went wrong'));
           }
+          print('Unhandled State: $state');
           return Center(child: Text('Initial State'));
         },
       ),

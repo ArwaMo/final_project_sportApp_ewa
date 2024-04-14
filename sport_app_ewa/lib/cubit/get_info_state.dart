@@ -31,6 +31,7 @@ final class GetInfoTeamSuccess extends GetInfoState {
 }
 
 final class GetInfoTeamError extends GetInfoState {}
+
 final class GetInfoTopscorersLoading extends GetInfoState {}
 
 final class GetInfoTopscorersSuccess extends GetInfoState {
@@ -39,7 +40,6 @@ final class GetInfoTopscorersSuccess extends GetInfoState {
 }
 
 final class GetInfoTopscorersError extends GetInfoState {}
-
 
 final class GetInfoPlayersLoading extends GetInfoState {}
 
