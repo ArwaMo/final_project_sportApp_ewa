@@ -46,18 +46,16 @@ class Services {
           final List<LeagueModel> leagues = results
               .map((dynamic item) => LeagueModel.fromJson(item))
               .toList();
-          print('this api country$countryId');
+
           return LeaguesList(leagues: leagues);
         }
       }
       return null;
-    } catch (e) {
-      print('Error fetching leagues');
-      return null;
+    } catch (er) {
+      throw Exception(er);
     }
   }
 
-// here
   Future<List<TeamTopscorersModel>?> getTeamsAPI(
       int leagueId, String? teamName) async {
     try {
@@ -65,7 +63,6 @@ class Services {
         'https://apiv2.allsportsapi.com/football/?&met=Teams&teamId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
       );
 
-      // print('this res $response');
       if (response.statusCode == 200) {
         final getData = response.data;
 
@@ -73,11 +70,10 @@ class Services {
             getData['success'] == 1 &&
             getData['result'] != null) {
           List<dynamic> resultsData = getData['result'];
-          // print(resultsData);
+
           List<TeamTopscorersModel> results = resultsData
               .map((item) => TeamTopscorersModel.fromJson(item))
               .toList();
-          print('this api leagueId$leagueId');
 
           return results;
         } else {
@@ -86,8 +82,8 @@ class Services {
       } else {
         return null;
       }
-    } catch (e) {
-      return null;
+    } catch (er) {
+      throw Exception(er);
     }
   }
 
@@ -100,36 +96,27 @@ class Services {
       if (response.statusCode == 200) {
         final data = response.data;
 
-        if (data != null && data['success'] == 1) {
-          if (data['result'] != null) {
-            List<dynamic> result;
-            if (data['result'] is String) {
-              result = jsonDecode(data['result']);
-            } else if (data['result'] is List) {
-              result = data['result'];
-            } else {
-              // print('Error: Unexpected data structure for result');
-              return null;
-            }
-
-            final List<TopscorersModel> results =
-                result.map((json) => TopscorersModel.fromJson(json)).toList();
-            return results;
+        if (data != null && data['success'] == 1 && data['result'] != null) {
+          List<dynamic> result;
+          if (data['result'] is String) {
+            result = jsonDecode(data['result']);
+          } else if (data['result'] is List) {
+            result = data['result'];
           } else {
-            //   print('Data not available');
             return null;
           }
+
+          final List<TopscorersModel> results =
+              result.map((json) => TopscorersModel.fromJson(json)).toList();
+          return results;
         } else {
-          // print('Error: Invalid API response');
           return null;
         }
       } else {
-        //   print('Error: ${response.statusCode}');
         return null;
       }
-    } catch (e) {
-      //  print('Error: $e');
-      return null;
+    } catch (er) {
+      throw Exception(er);
     }
   }
 
@@ -142,42 +129,28 @@ class Services {
       if (response.statusCode == 200) {
         final data = response.data;
 
-        if (data != null && data['success'] == 1) {
-          if (data['result'] != null) {
-            List<dynamic> result;
-            //  print('pppp'); //done
-            if (data['result'] is String) {
-              result = jsonDecode(data['result']);
-              //print('String');
-            } else if (data['result'] is List) {
-              result = data['result'];
-              // print('List');
-              // print('list data[' 'result' ']$result');
-            } else {
-              // print('Error: Unexpected data structure for result');
-              return null;
-            }
-
-            final List<PlayersModel> results =
-                result.map((json) => PlayersModel.fromJson(json)).toList();
-            // print('after json');
-            //  print(results[0].teamName);
-            return results;
+        if (data != null && data['success'] == 1 && data['result'] != null) {
+          List<dynamic> result;
+          if (data['result'] is String) {
+            result = jsonDecode(data['result']);
+          } else if (data['result'] is List) {
+            result = data['result'];
           } else {
-            //  print('Data not available');
             return null;
           }
+
+          final List<PlayersModel> results =
+              result.map((json) => PlayersModel.fromJson(json)).toList();
+
+          return results;
         } else {
-          //  print('Error: Invalid API response');
           return null;
         }
       } else {
-        // print('Error: ${response.statusCode}');
         return null;
       }
-    } catch (e) {
-      //  print('Error: $e');
-      return null;
+    } catch (er) {
+      throw Exception(er);
     }
   }
 

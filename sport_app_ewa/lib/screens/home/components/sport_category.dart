@@ -18,9 +18,12 @@ class SportCategory extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Image.asset(
-                image,
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Text(

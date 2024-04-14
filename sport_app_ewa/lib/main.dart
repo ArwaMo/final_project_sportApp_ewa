@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
           create: (BuildContext context) => UpdateBoolValueCubit(),
         ),
         BlocProvider<GetInfoCubit>(
-          create: (BuildContext context) => GetInfoCubit().getInfoCountry(),
+          create: (BuildContext context) => GetInfoCubit(),
         ),
         BlocProvider<GetCurrentCountryCubit>(
           create: (BuildContext context) => GetCurrentCountryCubit(),
