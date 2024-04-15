@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:sport_app_ewa/cubit/get_info_cubit.dart';
 import 'package:sport_app_ewa/data/models/countries_model.dart';
 import 'package:sport_app_ewa/data/models/leagues_model.dart';
@@ -67,61 +68,75 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                       ),
                     ),
                   ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final league = state.leaguesList.leagues[index];
+                  AnimationLimiter(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final league = state.leaguesList.leagues[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TeamsTopScorersScreen(
-                                        leagueId: league.leagueKey,
-                                      )),
-                            );
-                          },
-                          child: Card(
-                            color: Color(0xffc8ac89),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.all(10),
-                              trailing: ClipRRect(
-                                borderRadius: BorderRadius.circular(3),
-                                child: Image.network(
-                                  league.countryLogo ?? '',
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Icon(Icons.error),
-                                  scale: 4,
-                                  fit: BoxFit.cover,
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TeamsTopScorersScreen(
+                                          leagueId: league.leagueKey,
+                                        )),
+                              );
+                            },
+                            child: AnimationConfiguration.staggeredList(
+                              position: index,
+                              duration: const Duration(milliseconds: 800),
+                              child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FlipAnimation(
+                                  child: Card(
+                                    color: Color(0xffc8ac89),
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.all(10),
+                                      trailing: ClipRRect(
+                                        borderRadius: BorderRadius.circular(3),
+                                        child: Image.network(
+                                          league.countryLogo ?? '',
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Icon(Icons.error),
+                                          scale: 4,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      leading: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          league.leagueLogo ?? '',
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Icon(Icons.image),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        league.leagueName ?? '',
+                                        style: TextStyle(
+                                            color: Color(0xff171c38),
+                                            fontSize: 17),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  league.leagueLogo ?? '',
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Icon(Icons.image),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              title: Text(
-                                league.leagueName ?? '',
-                                style: TextStyle(
-                                    color: Color(0xff171c38), fontSize: 17),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider();
-                    },
-                    itemCount: state.leaguesList.leagues.length,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider();
+                      },
+                      itemCount: state.leaguesList.leagues.length,
+                    ),
                   ),
                 ],
               ),

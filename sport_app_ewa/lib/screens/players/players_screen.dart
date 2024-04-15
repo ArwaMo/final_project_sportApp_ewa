@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,117 +11,141 @@ import 'package:sport_app_ewa/screens/widgets/drawer_widget.dart';
 import 'package:sport_app_ewa/services/services.dart';
 
 class PlayersScreen extends StatefulWidget {
-  PlayersScreen({super.key, required this.player});
+  PlayersScreen({Key? key, required this.players}) : super(key: key);
+
+  final List<PlayersModel> players;
 
   @override
-  State<PlayersScreen> createState() => _PlayersScreenState();
-  int? player;
+  _PlayersScreenState createState() => _PlayersScreenState();
 }
-
-List<PlayersModel>? res;
 
 class _PlayersScreenState extends State<PlayersScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<GetInfoCubit>().getInfoPlayers(widget.player);
+    _fetchPlayers();
   }
 
+  void _fetchPlayers() {
+    context
+        .read<GetInfoCubit>()
+        .getInfoPlayers(widget.players, searchPlayers.text);
+  }
+
+  void _onSearchPressed() {
+    searchPlayers.clear();
+    _fetchPlayers();
+  }
+
+  void _onSearchTextChanged(String text) {
+    _fetchPlayers();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const DrawerWidget(),
-        appBar: AppBar(
-          title: const Text(
-            'Players',
-            style: TextStyle(
-              color: Color((0xff171c38)),
-            ),
+      drawer: const DrawerWidget(),
+      appBar: AppBar(
+        title: const Text(
+          'Players',
+          style: TextStyle(
+            color: Color(0xff171c38),
           ),
-          centerTitle: true,
         ),
-        body: BlocBuilder<GetInfoCubit, GetInfoState>(
-          builder: (context, state) {
-            if (state is GetInfoPlayersLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is GetInfoPlayersSuccess) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      TextFieldWidget(
-                        text: 'Search for a player',
-                        controller: searchPlayers,
-                        icon: Icons.search,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ListView.separated(
-                          physics: const ScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                                onTap: () {
-                                  dialog(
-                                    context,
-                                    state.playerList![index].playerName,
-                                    state.playerList![index].playerNumber,
-                                    state.playerList![index].playerCountry,
-                                    state.playerList![index].playerImage,
-                                    state.playerList![index].playerType,
-                                    state.playerList![index].playerAge,
-                                    state.playerList![index].playerYellowCards,
-                                    state.playerList![index].playerRedCards,
-                                    state.playerList![index].playerGoals,
-                                    state.playerList![index].playerAssists,
-                                  );
-                                },
-                                child: Card(
-                                  color: const Color(0xff1b223f),
-                                  child: ListTile(
-                                    leading: ClipOval(
-                                      child: Image.network(
-                                          '${state.playerList![index].playerImage ?? ''}',
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                                  const Icon(
-                                                    Icons.image,
-                                                    color: Color(0xffeefdfe),
-                                                  )),
-                                    ),
-                                    title: Text(
-                                      '${state.playerList![index].playerName ?? ''}',
-                                      style: const TextStyle(
-                                          color: Color(0xffeefdfe),
-                                          fontSize: 17),
-                                    ),
-                                    subtitle: Text(
-                                      '${state.playerList![index].playerType ?? ''}',
-                                      style: const TextStyle(
-                                          color: Color(0xffa1a0b7)),
-                                    ),
+        centerTitle: true,
+      ),
+      body: BlocBuilder<GetInfoCubit, GetInfoState>(
+        builder: (context, state) {
+          if (state is GetInfoPlayersLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is GetInfoPlayersSuccess) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    TextFieldWidget(
+                      text: 'Search for a player',
+                      controller: searchPlayers,
+                      prefixIcon: Icons.search,
+                      onPressed: _onSearchPressed,
+                      fun: _onSearchTextChanged,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.separated(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final player = state.playerList![index];
+                        return InkWell(
+                          onTap: () {
+                            dialog(
+                              context,
+                              player.playerName,
+                              player.playerNumber,
+                              player.playerCountry,
+                              player.playerImage,
+                              player.playerType,
+                              player.playerAge,
+                              player.playerYellowCards,
+                              player.playerRedCards,
+                              player.playerGoals,
+                              player.playerAssists,
+                            );
+                          },
+                          child: Card(
+                            color: const Color(0xff1b223f),
+                            child: ListTile(
+                              leading: ClipOval(
+                                child: Image.network(
+                                  '${player.playerImage ?? ''}',
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(
+                                    Icons.image,
+                                    color: Color(0xffeefdfe),
                                   ),
-                                ));
-                          },
-                          separatorBuilder: (context, index) {
-                            return const Divider();
-                          },
-                          itemCount: state.playerList!.length)
-                    ],
-                  ),
+                                ),
+                              ),
+                              title: Text(
+                                '${player.playerName ?? ''}',
+                                style: const TextStyle(
+                                  color: Color(0xffeefdfe),
+                                  fontSize: 17,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '${player.playerType ?? ''}',
+                                style: const TextStyle(
+                                  color: Color(0xffa1a0b7),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
+                      itemCount: state.playerList!.length,
+                    ),
+                  ],
                 ),
-              );
-            } else if (state is GetInfoPlayersError) {
-              return const Center(
-                child: Text('An error occurred while fetching player data'),
-              );
-            }
-            return Container();
-          },
-        ));
+              ),
+            );
+          } else if (state is GetInfoPlayersError) {
+            return const Center(
+              child: Text('An error occurred while fetching player data'),
+            );
+          }
+          return Container();
+        },
+      ),
+    );
   }
 }

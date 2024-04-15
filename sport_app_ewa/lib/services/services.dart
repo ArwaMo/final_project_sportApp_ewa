@@ -38,7 +38,6 @@ class Services {
         'https://apiv2.allsportsapi.com/football/?met=Leagues&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
         queryParameters: {"countryId": countryId},
       );
-
       if (response.statusCode == 200) {
         final data = response.data;
         if (data != null && data['success'] == 1 && data['result'] != null) {
@@ -60,7 +59,7 @@ class Services {
       int leagueId, String? teamName) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?&met=Teams&teamId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+        'https://apiv2.allsportsapi.com/football/?&met=Teams&leagueId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
       );
 
       if (response.statusCode == 200) {
@@ -74,7 +73,15 @@ class Services {
           List<TeamTopscorersModel> results = resultsData
               .map((item) => TeamTopscorersModel.fromJson(item))
               .toList();
-
+          if (teamName != null) {
+            results = results
+                .where((element) =>
+                    element.teamName != null &&
+                    element.teamName!
+                        .toLowerCase()
+                        .contains(teamName.toLowerCase()))
+                .toList();
+          }
           return results;
         } else {
           return null;
@@ -83,7 +90,7 @@ class Services {
         return null;
       }
     } catch (er) {
-      throw Exception(er);
+      throw Exception('$er');
     }
   }
 
@@ -120,27 +127,29 @@ class Services {
     }
   }
 
-  Future<List<PlayersModel>?> getPlayersAPI(dynamic teamKey) async {
+  Future<List<PlayersModel>?> getPlayersAPI(
+      dynamic playerId, String? playerName) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?&met=Players&teamId=$teamKey&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+        'https://apiv2.allsportsapi.com/football/?&met=Players&playerId=$playerId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
       );
 
       if (response.statusCode == 200) {
         final data = response.data;
 
         if (data != null && data['success'] == 1 && data['result'] != null) {
-          List<dynamic> result;
-          if (data['result'] is String) {
-            result = jsonDecode(data['result']);
-          } else if (data['result'] is List) {
-            result = data['result'];
-          } else {
-            return null;
-          }
+          final List<dynamic> result = data['result'];
 
-          final List<PlayersModel> results =
+          List<PlayersModel> results =
               result.map((json) => PlayersModel.fromJson(json)).toList();
+
+          if (playerName != null) {
+            results = results
+                .where((element) => element.playerName!
+                    .toLowerCase()
+                    .contains(playerName.toLowerCase()))
+                .toList();
+          }
 
           return results;
         } else {
@@ -149,8 +158,8 @@ class Services {
       } else {
         return null;
       }
-    } catch (er) {
-      throw Exception(er);
+    } catch (error) {
+      throw Exception('Failed to fetch players: $error');
     }
   }
 
