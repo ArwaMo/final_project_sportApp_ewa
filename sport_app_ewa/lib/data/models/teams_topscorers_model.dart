@@ -16,7 +16,7 @@ class ApiResponse {
 
 class TeamTopscorersModel {
   final int teamKey;
-  final String teamName;
+  final String? teamName;
   final String? teamLogo;
   final List<PlayersModel> players;
 

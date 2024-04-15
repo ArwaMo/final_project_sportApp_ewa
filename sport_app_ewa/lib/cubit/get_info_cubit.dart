@@ -38,12 +38,12 @@ class GetInfoCubit extends Cubit<GetInfoState> {
     }
   }
 
-  Future<dynamic> getInfoTeam(dynamic leagueId, String searchController) async {
+  Future<dynamic> getInfoTeam(dynamic leagueId, String? teamName) async {
     try {
       emit(GetInfoTeamLoading());
 
       List<TeamTopscorersModel>? result =
-          await Services().getTeamsAPI(leagueId, searchController);
+          await Services().getTeamsAPI(leagueId, teamName);
 
       List<TeamTopscorersModel>? teamsResult;
       if (result != null) {
@@ -54,7 +54,7 @@ class GetInfoCubit extends Cubit<GetInfoState> {
         emit(GetInfoTeamError());
       }
     } catch (e) {
-      print('Error fetching teams');
+      print(e);
     }
   }
 
@@ -78,22 +78,30 @@ class GetInfoCubit extends Cubit<GetInfoState> {
     return null;
   }
 
-  Future<List<PlayersModel>?> getInfoPlayers(dynamic teamKey) async {
+  Future<void> getInfoPlayers(
+      List<PlayersModel> players, String? playerName) async {
     try {
       emit(GetInfoPlayersLoading());
-      List<PlayersModel>? players = await Services().getPlayersAPI(teamKey);
-      print('team');
-      print('-------------');
-      if (players != null) {
-        print(players);
-        emit(GetInfoPlayersSuccess(players));
-      } else {
-        print('here errror');
-        emit(GetInfoPlayersError());
+
+      List<Future<List<PlayersModel>?>> futures = [];
+
+      for (var player in players) {
+        futures.add(Services().getPlayersAPI(player.playerKey, playerName));
       }
-    } catch (er) {
-      print('this catch $er');
+
+      List<List<PlayersModel>?> results = await Future.wait(futures);
+
+      List<PlayersModel> finalResults = [];
+
+      for (var result in results) {
+        if (result != null) {
+          finalResults.addAll(result);
+        }
+      }
+
+      emit(GetInfoPlayersSuccess(finalResults));
+    } catch (e) {
+      emit(GetInfoPlayersError());
     }
-    return null;
   }
 }

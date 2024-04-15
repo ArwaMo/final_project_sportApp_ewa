@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:sport_app_ewa/cubit/get_current_country_cubit.dart';
 import 'package:sport_app_ewa/cubit/get_info_cubit.dart';
 import 'package:sport_app_ewa/data/models/countries_model.dart';
@@ -143,100 +144,134 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    GridView.builder(
-                      controller: controller,
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: state.countriesList.countries.length,
-                      itemBuilder: (context, index) {
-                        final country = state.countriesList.countries[index];
-                        allCountry.add(country.countryName!);
+                    AnimationLimiter(
+                      child: GridView.builder(
+                        controller: controller,
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.countriesList.countries.length,
+                        itemBuilder: (context, index) {
+                          final country = state.countriesList.countries[index];
+                          allCountry.add(country.countryName!);
 
-                        // scrollCountry(country.countryName!);
-                        return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LeaguesScreen(
-                                          countryKey: country.countryKey,
-                                        )),
-                              );
-                            },
-                            child: (state.countriesList.countries[index]
-                                        .countryName ==
-                                    'USA')
-                                ? Column(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              border: Border.symmetric(
-                                                  vertical: BorderSide(
-                                                      width: 10,
-                                                      color: Color.fromARGB(
-                                                          255, 0, 0, 0)),
-                                                  horizontal: BorderSide(
-                                                      width: 10,
-                                                      color: Color.fromARGB(
-                                                          255, 0, 0, 0)))),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            child: Image.network(
-                                              country.countryLogo ?? '',
-                                              fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  Icon(Icons.error),
+                          // scrollCountry(country.countryName!);
+                          return AnimationConfiguration.staggeredGrid(
+                            position: index,
+                            duration: const Duration(milliseconds: 800),
+                            columnCount: 2,
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LeaguesScreen(
+                                              countryKey: country.countryKey,
+                                            )),
+                                  );
+                                },
+                                child: (state.countriesList.countries[index]
+                                            .countryName ==
+                                        'USA')
+                                    ? ScaleAnimation(
+                                        child: FadeInAnimation(
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                      border: Border.symmetric(
+                                                          vertical: BorderSide(
+                                                              width: 10,
+                                                              color:
+                                                                  Color.fromARGB(
+                                                                      255,
+                                                                      0,
+                                                                      0,
+                                                                      0)),
+                                                          horizontal:
+                                                              BorderSide(
+                                                                  width: 10,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          0,
+                                                                          0,
+                                                                          0)))),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    child: Image.network(
+                                                      country.countryLogo ?? '',
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Icon(Icons.error),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                country.countryName ??
+                                                    'Unknown',
+                                                style: const TextStyle(
+                                                    color: Color(0xff171c38),
+                                                    fontSize: 17,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    : ScaleAnimation(
+                                        child: FadeInAnimation(
+                                          child: Container(
+                                            decoration: const BoxDecoration(),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    child: Image.network(
+                                                      country.countryLogo ?? '',
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          const Icon(
+                                                              Icons.image),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  country.countryName ??
+                                                      'Unknown',
+                                                  style: const TextStyle(
+                                                      color: Color(0xff171c38),
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        country.countryName ?? 'Unknown',
-                                        style: const TextStyle(
-                                            color: Color(0xff171c38),
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
-                                  )
-                                : Container(
-                                    decoration: const BoxDecoration(),
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            child: Image.network(
-                                              country.countryLogo ?? '',
-                                              fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  const Icon(Icons.image),
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          country.countryName ?? 'Unknown',
-                                          style: const TextStyle(
-                                              color: Color(0xff171c38),
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                  ));
-                      },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 7,
-                        mainAxisSpacing: 2,
+                                      )),
+                          );
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 7,
+                          mainAxisSpacing: 2,
+                        ),
                       ),
                     )
                   ],

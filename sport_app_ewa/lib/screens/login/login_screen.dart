@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                     child: TextFieldWidget(
                       text: 'Enter Phone Number',
                       controller: phoneNum,
-                      keyboard: TextInputType.phone,
+                      keyboard: TextInputType.phone, 
                     ),
                   ),
                   Positioned(
@@ -82,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                     top: 323,
                     child: TextFieldWidget(
                       text: 'Enter OTP',
-                      controller: otp,
+                      controller: otp, 
                     ),
                   ),
                   Positioned(

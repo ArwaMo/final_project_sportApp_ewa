@@ -1,19 +1,15 @@
 // ignore_for_file: unnecessary_string_interpolations
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:sport_app_ewa/cubit/get_info_cubit.dart';
 import 'package:sport_app_ewa/data/global_data/global_data.dart';
 import 'package:sport_app_ewa/data/models/teams_topscorers_model.dart';
-import 'package:sport_app_ewa/data/models/topscorers_model.dart';
 import 'package:sport_app_ewa/screens/login/components/text_field_widget.dart';
 import 'package:sport_app_ewa/screens/players/players_screen.dart';
 import 'package:sport_app_ewa/screens/widgets/drawer_widget.dart';
-import 'package:sport_app_ewa/services/services.dart';
 
 class TeamsTopScorersScreen extends StatefulWidget {
   const TeamsTopScorersScreen({
@@ -30,25 +26,34 @@ class TeamsTopScorersScreen extends StatefulWidget {
 class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
     with TickerProviderStateMixin {
   late final TabController tabController;
-  TextEditingController searchController = TextEditingController();
-  TeamTopscorersModel? team;
+  final TextEditingController searchTeams = TextEditingController();
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     super.initState();
 
-    context
-        .read<GetInfoCubit>()
-        .getInfoTeam(widget.leagueId, searchController.text);
-
-    print(widget.leagueId);
+    _fetchPlayers();
   }
 
   @override
   void dispose() {
     tabController.dispose();
-    searchController.dispose();
+    searchTeams.dispose();
     super.dispose();
+  }
+
+  void _fetchPlayers() {
+    context.read<GetInfoCubit>().getInfoTeam(widget.leagueId, searchTeams.text);
+  }
+
+  void _onSearchPressed() {
+    searchTeams.clear();
+    _fetchPlayers();
+  }
+
+  void _onSearchTextChanged(String text) {
+    _fetchPlayers();
+    setState(() {});
   }
 
   @override
@@ -65,7 +70,7 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
             } else {
               context
                   .read<GetInfoCubit>()
-                  .getInfoTeam(widget.leagueId, searchController.text);
+                  .getInfoTeam(widget.leagueId, searchTeams.text);
             }
           },
           controller: tabController,
@@ -98,60 +103,75 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
                       TextFieldWidget(
                         text: 'Search for a team',
                         controller: searchTeams,
-                        icon: Icons.search,
+                        prefixIcon: Icons.search,
+                        onPressed: _onSearchPressed,
+                        fun: _onSearchTextChanged,
                       ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: GridView.builder(
-                            itemCount: state.teamList!.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ),
-                            itemBuilder: (context, index) {
-                              final team = state.teamList![index];
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PlayersScreen(
-                                            player: team.teamKey)),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: const Color(0xffc8ac89),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.network(
-                                        team.teamLogo ?? '',
-                                        scale: 2,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                const Icon(Icons.image),
-                                      ),
-                                      const SizedBox(
-                                        height: 9,
-                                      ),
-                                      Text(
-                                        team.teamName,
-                                        style: const TextStyle(
-                                          color: Color(0xff171c38),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
+                          child: AnimationLimiter(
+                            child: GridView.builder(
+                              itemCount: state.teamList!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 6,
+                                      mainAxisSpacing: 6),
+                              itemBuilder: (context, index) {
+                                final team = state.teamList![index];
+                                return AnimationConfiguration.staggeredGrid(
+                                  columnCount: 2,
+                                  position: index,
+                                  duration: const Duration(milliseconds: 800),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => PlayersScreen(
+                                                players: team.players)),
+                                      );
+                                    },
+                                    child: ScaleAnimation(
+                                      child: FadeInAnimation(
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            color: const Color(0xffc8ac89),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.network(
+                                                team.teamLogo ?? '',
+                                                scale: 2,
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    const Icon(Icons.image),
+                                              ),
+                                              const SizedBox(
+                                                height: 9,
+                                              ),
+                                              Text(
+                                                team.teamName ?? '',
+                                                style: const TextStyle(
+                                                  color: Color(0xff171c38),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -177,96 +197,114 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
                   child: CircularProgressIndicator(),
                 );
               } else if (state is GetInfoTopscorersSuccess) {
-                return ListView.separated(
-                  itemBuilder: (BuildContext context, int index) {
-                    return Stack(children: [
-                      Card(
-                        color: const Color(0xff1b223f),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xffd30f59),
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(8))),
-                                    child: Center(
-                                      child: Text(
-                                        ' ${state.topScorersList![index].playerPlace}',
-                                        style: const TextStyle(
-                                            color: Color(0xffeefdfe)),
+                return AnimationLimiter(
+                  child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 800),
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: Stack(children: [
+                              Card(
+                                color: const Color(0xff1b223f),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional.topStart,
+                                          child: Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xffd30f59),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(8))),
+                                            child: Center(
+                                              child: Text(
+                                                ' ${state.topScorersList![index].playerPlace}',
+                                                style: const TextStyle(
+                                                    color: Color(0xffeefdfe)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 20, left: 60),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${state.topScorersList![index].playerName}',
+                                                style: const TextStyle(
+                                                    color: Color(0xffeefdfe),
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                '${state.topScorersList![index].teamName}',
+                                                style: const TextStyle(
+                                                    color: Color(0xffeefdfe),
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                            ],
+                                          ),
+                                          Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10),
+                                            child: Text(
+                                              '${state.topScorersList![index].goals}',
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xfff8f1e0)),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 20, left: 60),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${state.topScorersList![index].playerName}',
-                                        style: const TextStyle(
-                                            color: Color(0xffeefdfe),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        '${state.topScorersList![index].teamName}',
-                                        style: const TextStyle(
-                                            color: Color(0xffeefdfe),
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: Text(
-                                      '${state.topScorersList![index].goals}',
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xfff8f1e0)),
-                                    ),
-                                  ),
-                                ],
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                  left: 300,
+                                  child: Opacity(
+                                    opacity: 0.1,
+                                    child: Image.asset(
+                                      'assets/images/logo.png',
+                                      width: 100,
+                                      height: 100,
+                                    ),
+                                  )),
+                            ]),
+                          ),
                         ),
-                      ),
-                      Positioned(
-                          left: 300,
-                          child: Opacity(
-                            opacity: 0.1,
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              width: 100,
-                              height: 100,
-                            ),
-                          )),
-                    ]);
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const Divider();
-                  },
-                  itemCount: state.topScorersList!.length,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
+                    itemCount: state.topScorersList!.length,
+                  ),
                 );
               } else if (state is GetInfoTopscorersError) {
                 return const Center(
