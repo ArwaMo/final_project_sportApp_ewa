@@ -32,7 +32,7 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
     tabController = TabController(length: 2, vsync: this);
     super.initState();
 
-    _fetchPlayers();
+    _fetchTeams();
   }
 
   @override
@@ -42,17 +42,17 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
     super.dispose();
   }
 
-  void _fetchPlayers() {
+  void _fetchTeams() {
     context.read<GetInfoCubit>().getInfoTeam(widget.leagueId, searchTeams.text);
   }
 
   void onSearchPressed() {
     searchTeams.clear();
-    _fetchPlayers();
+    _fetchTeams();
   }
 
   void _onSearchTextChanged(String text) {
-    _fetchPlayers();
+    _fetchTeams();
     setState(() {});
   }
 

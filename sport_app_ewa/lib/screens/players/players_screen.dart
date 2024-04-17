@@ -54,97 +54,96 @@ class _PlayersScreenState extends State<PlayersScreen> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<GetInfoCubit, GetInfoState>(
-        builder: (context, state) {
-          if (state is GetInfoPlayersLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is GetInfoPlayersSuccess) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    TextFieldWidget(
-                      text: 'Search for a player',
-                      controller: searchPlayers,
-                      prefixIcon: Icons.search,
-                      iconClose: () => onSearchPressed(),
-                      icon: Icons.close,
-                      fun: _onSearchTextChanged,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListView.separated(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final player = state.playerList![index];
-                        return InkWell(
-                          onTap: () {
-                            dialog(
-                              context,
-                              player.playerName,
-                              player.playerNumber,
-                              player.playerCountry,
-                              player.playerImage,
-                              player.playerType,
-                              player.playerAge,
-                              player.playerYellowCards,
-                              player.playerRedCards,
-                              player.playerGoals,
-                              player.playerAssists,
-                            );
-                          },
-                          child: Card(
-                            color: const Color(0xff1b223f),
-                            child: ListTile(
-                              leading: ClipOval(
-                                child: Image.network(
-                                  '${player.playerImage ?? ''}',
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(
-                                    Icons.image,
-                                    color: Color(0xffeefdfe),
-                                  ),
-                                ),
-                              ),
-                              title: Text(
-                                '${player.playerName ?? ''}',
-                                style: const TextStyle(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              TextFieldWidget(
+                text: 'Search for a player',
+                controller: searchPlayers,
+                prefixIcon: Icons.search,
+                iconClose: () => onSearchPressed(),
+                icon: Icons.close,
+                fun: _onSearchTextChanged,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              BlocBuilder<GetInfoCubit, GetInfoState>(
+                  builder: (context, state) {
+                if (state is GetInfoPlayersLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is GetInfoPlayersSuccess) {
+                  return ListView.separated(
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final player = state.playerList![index];
+                      return InkWell(
+                        onTap: () {
+                          dialog(
+                            context,
+                            player.playerName,
+                            player.playerNumber,
+                            player.playerCountry,
+                            player.playerImage,
+                            player.playerType,
+                            player.playerAge,
+                            player.playerYellowCards,
+                            player.playerRedCards,
+                            player.playerGoals,
+                            player.playerAssists,
+                          );
+                        },
+                        child: Card(
+                          color: const Color(0xff1b223f),
+                          child: ListTile(
+                            leading: ClipOval(
+                              child: Image.network(
+                                '${player.playerImage ?? ''}',
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(
+                                  Icons.image,
                                   color: Color(0xffeefdfe),
-                                  fontSize: 17,
-                                ),
-                              ),
-                              subtitle: Text(
-                                '${player.playerType ?? ''}',
-                                style: const TextStyle(
-                                  color: Color(0xffa1a0b7),
                                 ),
                               ),
                             ),
+                            title: Text(
+                              '${player.playerName ?? ''}',
+                              style: const TextStyle(
+                                color: Color(0xffeefdfe),
+                                fontSize: 17,
+                              ),
+                            ),
+                            subtitle: Text(
+                              '${player.playerType ?? ''}',
+                              style: const TextStyle(
+                                color: Color(0xffa1a0b7),
+                              ),
+                            ),
                           ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider();
-                      },
-                      itemCount: state.playerList!.length,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else if (state is GetInfoPlayersError) {
-            return const Center(
-              child: Text('An error occurred while fetching player data'),
-            );
-          }
-          return Container();
-        },
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                    itemCount: state.playerList!.length,
+                  );
+                } else if (state is GetInfoPlayersError) {
+                  return const Center(
+                    child: Text('An error occurred while fetching player data'),
+                  );
+                }
+                return Container();
+              })
+            ],
+          ),
+        ),
       ),
     );
   }
