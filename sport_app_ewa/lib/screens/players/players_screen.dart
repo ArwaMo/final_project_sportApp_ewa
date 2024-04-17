@@ -1,14 +1,13 @@
-// ignore_for_file: unnecessary_string_interpolations, unused_local_variable
+// ignore_for_file: unnecessary_string_interpolations, unused_local_variable, library_private_types_in_public_api, use_super_parameters, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sport_app_ewa/cubit/get_info_cubit.dart';
 import 'package:sport_app_ewa/data/global_data/global_data.dart';
 import 'package:sport_app_ewa/data/models/players_model.dart';
-import 'package:sport_app_ewa/screens/login/components/text_field_widget.dart';
+import 'package:sport_app_ewa/screens/widgets/text_field_widget.dart';
 import 'package:sport_app_ewa/screens/players/components/dialog_players.dart';
 import 'package:sport_app_ewa/screens/widgets/drawer_widget.dart';
-import 'package:sport_app_ewa/services/services.dart';
 
 class PlayersScreen extends StatefulWidget {
   PlayersScreen({Key? key, required this.players}) : super(key: key);
@@ -32,7 +31,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
         .getInfoPlayers(widget.players, searchPlayers.text);
   }
 
-  void _onSearchPressed() {
+  void onSearchPressed() {
     searchPlayers.clear();
     _fetchPlayers();
   }
@@ -72,7 +71,8 @@ class _PlayersScreenState extends State<PlayersScreen> {
                       text: 'Search for a player',
                       controller: searchPlayers,
                       prefixIcon: Icons.search,
-                      onPressed: _onSearchPressed,
+                      iconClose: () => onSearchPressed(),
+                      icon: Icons.close,
                       fun: _onSearchTextChanged,
                     ),
                     const SizedBox(
