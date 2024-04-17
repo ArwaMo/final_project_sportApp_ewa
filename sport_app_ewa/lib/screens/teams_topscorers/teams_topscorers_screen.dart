@@ -7,7 +7,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:sport_app_ewa/cubit/get_info_cubit.dart';
 import 'package:sport_app_ewa/data/global_data/global_data.dart';
 import 'package:sport_app_ewa/data/models/teams_topscorers_model.dart';
-import 'package:sport_app_ewa/screens/login/components/text_field_widget.dart';
+import 'package:sport_app_ewa/screens/widgets/text_field_widget.dart';
 import 'package:sport_app_ewa/screens/players/players_screen.dart';
 import 'package:sport_app_ewa/screens/widgets/drawer_widget.dart';
 
@@ -46,7 +46,7 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
     context.read<GetInfoCubit>().getInfoTeam(widget.leagueId, searchTeams.text);
   }
 
-  void _onSearchPressed() {
+  void onSearchPressed() {
     searchTeams.clear();
     _fetchPlayers();
   }
@@ -104,7 +104,8 @@ class _TeamsTopScorersScreenState extends State<TeamsTopScorersScreen>
                         text: 'Search for a team',
                         controller: searchTeams,
                         prefixIcon: Icons.search,
-                        onPressed: _onSearchPressed,
+                        iconClose: () => onSearchPressed(),
+                        icon: Icons.close,
                         fun: _onSearchTextChanged,
                       ),
                       Expanded(

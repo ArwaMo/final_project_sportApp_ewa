@@ -90,7 +90,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                         context
                             .read<GetCurrentCountryCubit>()
                             .getCurrentCountry(currentCountry);
-
                         scrollCountry('United States');
                       },
                       icon: Icon(
@@ -154,7 +153,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                           final country = state.countriesList.countries[index];
                           allCountry.add(country.countryName!);
 
-                          // scrollCountry(country.countryName!);
                           return AnimationConfiguration.staggeredGrid(
                             position: index,
                             duration: const Duration(milliseconds: 800),

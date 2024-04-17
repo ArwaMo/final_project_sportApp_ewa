@@ -2,17 +2,15 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:sport_app_ewa/cubit/update_bool_value_cubit.dart';
 import 'package:sport_app_ewa/data/global_data/global_data.dart';
 import 'package:sport_app_ewa/screens/widgets/dialog_text_otp.dart';
 import 'package:sport_app_ewa/screens/home/home_screen.dart';
-import 'package:sport_app_ewa/screens/login/components/text_field_widget.dart';
+import 'package:sport_app_ewa/screens/widgets/text_field_widget.dart';
 import 'package:sport_app_ewa/screens/widgets/dialog_loading.dart';
 import 'package:sport_app_ewa/services/login_with_google.dart';
 
@@ -73,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                     child: TextFieldWidget(
                       text: 'Enter Phone Number',
                       controller: phoneNum,
-                      keyboard: TextInputType.phone, 
+                      keyboard: TextInputType.phone,
                     ),
                   ),
                   Positioned(
@@ -82,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                     top: 323,
                     child: TextFieldWidget(
                       text: 'Enter OTP',
-                      controller: otp, 
+                      controller: otp,
                     ),
                   ),
                   Positioned(

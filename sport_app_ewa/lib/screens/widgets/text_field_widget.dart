@@ -9,8 +9,9 @@ class TextFieldWidget extends StatelessWidget {
       required this.text,
       required this.controller,
       this.keyboard,
+      this.icon,
       this.prefixIcon,
-      this.onPressed,
+      this.iconClose,
       this.fun});
 
   final String text;
@@ -19,7 +20,8 @@ class TextFieldWidget extends StatelessWidget {
   IconData? prefixIcon;
 
   final Function(String)? fun;
-  Function()? onPressed;
+  final Function()? iconClose;
+  IconData? icon;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -32,9 +34,9 @@ class TextFieldWidget extends StatelessWidget {
           prefixIcon: Icon(prefixIcon),
           suffixIcon: InkWell(
               onTap: () {
-                onPressed!();
+                iconClose!();
               },
-              child: const Icon(Icons.close)),
+              child: Icon(icon)),
           contentPadding: const EdgeInsets.all(16),
           hintText: text,
           focusedBorder: const OutlineInputBorder(

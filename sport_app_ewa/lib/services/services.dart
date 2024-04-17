@@ -13,7 +13,7 @@ class Services {
   Future<CountriesList?> getCountryAPI() async {
     try {
       Response response = await dio.get(
-          'https://apiv2.allsportsapi.com/football/?met=Countries&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1');
+          'https://apiv2.allsportsapi.com/football/?met=Countries&APIkey=efc62d54e5b68fff0ed7c3063ea6bfe413a0bbb3a2130512f5dd2d4aa62b7a87');
 
       if (response.statusCode != 200) {
         return null;
@@ -35,7 +35,7 @@ class Services {
   Future<LeaguesList?> getLeaguesAPI(dynamic countryId) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?met=Leagues&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+        'https://apiv2.allsportsapi.com/football/?met=Leagues&APIkey=efc62d54e5b68fff0ed7c3063ea6bfe413a0bbb3a2130512f5dd2d4aa62b7a87',
         queryParameters: {"countryId": countryId},
       );
       if (response.statusCode == 200) {
@@ -59,7 +59,7 @@ class Services {
       int leagueId, String? teamName) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?&met=Teams&leagueId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+        'https://apiv2.allsportsapi.com/football/?&met=Teams&leagueId=$leagueId&APIkey=efc62d54e5b68fff0ed7c3063ea6bfe413a0bbb3a2130512f5dd2d4aa62b7a87',
       );
 
       if (response.statusCode == 200) {
@@ -97,7 +97,7 @@ class Services {
   Future<List<TopscorersModel>?> getTopscorersAPI(dynamic leagueId) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?&met=Topscorers&leagueId=$leagueId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+        'https://apiv2.allsportsapi.com/football/?&met=Topscorers&leagueId=$leagueId&APIkey=efc62d54e5b68fff0ed7c3063ea6bfe413a0bbb3a2130512f5dd2d4aa62b7a87',
       );
 
       if (response.statusCode == 200) {
@@ -131,7 +131,7 @@ class Services {
       dynamic playerId, String? playerName) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?&met=Players&playerId=$playerId&APIkey=037b2205da5369b0242afd963c92f07b3f7105c095c399105d53a811f78202f1',
+        'https://apiv2.allsportsapi.com/football/?&met=Players&playerId=$playerId&APIkey=efc62d54e5b68fff0ed7c3063ea6bfe413a0bbb3a2130512f5dd2d4aa62b7a87',
       );
 
       if (response.statusCode == 200) {
