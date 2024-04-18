@@ -74,8 +74,11 @@ class _PlayersScreenState extends State<PlayersScreen> {
               BlocBuilder<GetInfoCubit, GetInfoState>(
                   builder: (context, state) {
                 if (state is GetInfoPlayersLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height / 1.7,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
                 } else if (state is GetInfoPlayersSuccess) {
                   return ListView.separated(

@@ -54,7 +54,7 @@ class GetInfoCubit extends Cubit<GetInfoState> {
         emit(GetInfoTeamError());
       }
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 
@@ -63,17 +63,14 @@ class GetInfoCubit extends Cubit<GetInfoState> {
       emit(GetInfoTopscorersLoading());
       List<TopscorersModel>? topScorer =
           await Services().getTopscorersAPI(leagueId);
-      print(topScorer);
-      print('-------------');
+
       if (topScorer != null) {
-        print(topScorer);
         emit(GetInfoTopscorersSuccess(topScorer));
       } else {
-        print('here errror');
         emit(GetInfoTopscorersError());
       }
     } catch (er) {
-      print('this catch $er');
+      throw Exception(er);
     }
     return null;
   }
